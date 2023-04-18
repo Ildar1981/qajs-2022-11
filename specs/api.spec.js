@@ -1,4 +1,4 @@
-import {fetch} from "node-fetch"
+import fetch from "node-fetch"
 import {describe, expect, test} from '@jest/globals'
 
 test('GET request', async () => {
