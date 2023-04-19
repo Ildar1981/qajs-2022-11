@@ -1,9 +1,67 @@
-import {fetch} from "node-fetch"
+import axios from 'axios'
 import {describe, expect, test} from '@jest/globals'
 
-test('GET request', async () => {
-    const response = fetch('https://bookstore.demoqa.com/swagger/');
-    const data = await response.json();
-    console.log(response.status)
-    console.log(data)
-});
+
+    
+   
+test('GET', async () => {
+    let res = await axios({
+        url: 'https://bookstore.demoqa.com',
+        method: 'get',
+        timeout: 8000,
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    expect(res.status).toEqual(200)
+})
+
+
+    test('post authorization', async () => {
+    let res = await axios({
+        url: 'https://bookstore.demoqa.com/Account/v1/User',
+        method: 'post',
+        timeout: 8000,
+        headers: {
+            'Content-Type': 'application/json'},
+            body: JSON.stringify( {
+                login: 'ildar20001',
+                password: '123_!qQ',
+            })
+          
+        })
+
+    expect(res.status).toEqual(400)
+    console.log(res.status)
+})
+
+test('post login pass', async () => {
+    let res = await axios({
+        url: 'https://bookstore.demoqa.com/Account/v1/User',
+        method: 'post',
+        timeout: 8000,
+        headers: {
+            'Content-Type': 'application/json'},
+            body: JSON.stringify( {
+                login: 'ildar456',
+                password: '123_!qQ',
+            })
+        })
+
+    expect(res.status).toEqual(404)
+})
+test('post password pass', async () => {
+    let res = await axios({
+        url: 'https://bookstore.demoqa.com/Account/v1/User',
+        method: 'post',
+        timeout: 8000,
+        headers: {
+            'Content-Type': 'application/json'},
+            body: JSON.stringify( {
+                login: 'ildar456',
+                password: '123_!q',
+            })
+        })
+
+    expect(res.status).toEqual(404)
+})
